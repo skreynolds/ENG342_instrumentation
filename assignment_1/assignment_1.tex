@@ -152,7 +152,7 @@ The resistance is determined as:
 \begin{align}
 R = \frac{1}{\omega \cdot C_P} = \frac{1}{\rho \cdot v_f \cdot C_P} = \frac{1}{836.8}\si{\minute\degreeCelsius\per\kilo\joule}
 \end{align}
-\subsection{Time Response for Step Increase in Feed Temperature, With Heat Input Held Constant}
+\subsection{Plant Time Response for Step Increase in Feed Temperature, With Heat Input Held Constant}
 Holding the heat input to the system constant, a step increase in the feed temperature was input to the system. The mathematical model in the Laplace domain can be seen in equation (XX):
 \begin{align}
 T'(s) = \frac{1}{5 \cdot \tau + 1} \cdot T'_i(s)
@@ -196,7 +196,7 @@ The plot of this model can be seen in Figure XX. A simulation of the system was 
 \end{minipage}
 \end{figure}
 
-\subsection{Time Response for Step Increase in Heat Input, With Feed Temperature Held Constant}
+\subsection{Plant Time Response for Step Increase in Heat Input, With Feed Temperature Held Constant}
 Holding the feed temperature to the system constant, a step increase in the heat input introduced to the system. The mathematical model in the Laplace domain can be seen in equation (XX):
 \begin{align}
 T'(s) = \frac{1}{5 \cdot \tau + 1} \cdot T'_i(s) + \frac{\sfrac{1}{836.8}}{5 \cdot \tau + 1} \cdot q'_h(s)
@@ -239,47 +239,41 @@ The plot of this model can be seen in Figure XX. A simulation of the system was 
 \end{minipage}
 \end{figure}
 
-\subsection{Time Response for Step Increase in Feed Temperature and Input Heat}
+\subsection{Plant Time Response for Step Increase in Feed Temperature and Input Heat}
 
 A step increase in the heat input and the feed temperature has a mathematical model in the Laplace domain which is shown in equation (XX):
 \begin{align}
-T'(s) = \frac{\sfrac{1}{836.8}}{5 \cdot \tau + 1} \cdot q'_h(s)
+T'(s) = \frac{1}{5 \cdot \tau + 1} \cdot T'_i(s) + \frac{\sfrac{1}{836.8}}{5 \cdot \tau + 1} \cdot q'_h(s)
 \end{align} 
 
-Given a deviation in the heat input, $q'_h(t)$ , of 42$\si{\kilo\watt} = 2520\si{\kilo\joule\per\minute}$, we note that the Laplace transform is:
-\begin{align*}
-\mathscr{L}\{q'_h(t)\} &= \mathscr{L}\{2520 \cdot u(t)\}\\
-q'_h(s) &= \frac{2520}{s}
-\end{align*}
-
-The mathematical model, in the Laplace domain, becomes:
+The step increase in the heat from the the feed is 10$\si{\degreeCelsius}$, and the step increase for the heat input is 42$\si{\kilo\watt}$ as in the previous two subsections. This yields the following mathematical model in the Laplace domain:
 \begin{align}
-T'(s) = \frac{2520}{s \cdot (5 \cdot s + 1)}
+T'(s) = \frac{10}{s \cdot (5 \cdot s + 1)} + \frac{2520}{s \cdot (5 \cdot s + 1)}
 \end{align}
 
 Solving this system yields the following expression for the temperature deviation in the time domain:
 \begin{align}
-T'(t) = 3 \cdot (1 - e^{-\sfrac{t}{5}})
+T'(t) = 13 \cdot (1 - e^{-\sfrac{t}{5}})
 \end{align}
 
 The plot of this model can be seen in Figure XX. A simulation of the system was run in Simulink using the block diagram shown in Figure XX. The step input, and simulated system response can be seen in Figure XX.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.2]{block_1b}
+\includegraphics[scale=0.2]{block_1c}
 \caption{text}
 \end{figure}
 
 \begin{figure}[h]
 \begin{minipage}{0.45\textwidth}
 \centering
-\includegraphics[height=6cm]{1b_mod}
+\includegraphics[height=6cm]{1c_mod}
 \caption{Temperature deviation model, shown in equation (12), for a step change in the feed temperature of 10$\si{\degreeCelsius}$, holding the heat input constant}
 \end{minipage}
 \hspace{1cm}
 \begin{minipage}{0.45\textwidth}
 \centering
-\includegraphics[height=6cm]{1b_sim}
+\includegraphics[height=6cm]{1c_sim}
 \caption{Temperature deviation simulation for a step change in the feed temperature of 10$\si{\degreeCelsius}$, holding the heat input constant}
 \end{minipage}
 \end{figure}
@@ -289,9 +283,86 @@ The plot of this model can be seen in Figure XX. A simulation of the system was 
 %	SECTION 3
 %----------------------------------------------------------------------------------------
 
-\section{Conclusion}
+\section{Instrument Time Response for the Step Increase in Feed Temperature}
 
+Holding the heat input constant, the feed temperature underwent a step increase. Further to this, the temperature deviation, $T'(t)$, is measured by an instrument which is modelled by a first order system with a time constant of 0.5$\si{\minute}$. The mathematical model, in the Laplace domain, of the temperature deviation measured by the instrument, $T'_m(t)$, is as follows: 
+\begin{align*}
+T'_m(s) = \bigg(\frac{1}{0.5 s + 1}\bigg) \cdot T'(s) = \bigg(\frac{1}{0.5s + 1}\bigg) \cdot \bigg(\frac{1}{5s + 1}\bigg) \cdot T'_i(s)
+\end{align*}
 
+The step increase in the heat from the the feed is 10$\si{\degreeCelsius}$, which yields the following mathematical model in the Laplace domain:
+\begin{align*}
+T'_m(s) = \frac{10}{s \cdot (0.5s + 1) \cdot (5s + 1)}
+\end{align*}
 
+Solving this system yields the following expression for the temperature deviation, as measured by the instrument, in the time domain:
+\begin{align}
+T'_m(t) = 10 \cdot (1 + 0.11 \cdot e^{-2t} - 1.11 \cdot e^{-0.2t})
+\end{align} 
 
+The plot of this model can be seen in Figure XX. A simulation of the system was run in Simulink using the block diagram shown in Figure XX. The step input, and simulated system response can be seen in Figure XX.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.2]{block_2}
+\caption{text}
+\end{figure}
+
+\begin{figure}[h]
+\begin{minipage}{0.45\textwidth}
+\centering
+\includegraphics[height=6cm]{2_mod}
+\caption{Temperature deviation model, shown in equation (12), for a step change in the feed temperature of 10$\si{\degreeCelsius}$, holding the heat input constant}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}{0.45\textwidth}
+\centering
+\includegraphics[height=6cm]{2_sim}
+\caption{Temperature deviation simulation for a step change in the feed temperature of 10$\si{\degreeCelsius}$, holding the heat input constant}
+\end{minipage}
+\end{figure}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 4
+%----------------------------------------------------------------------------------------
+
+\section{PID Controller For Tank Heating System}
+A proportional-integral-derivative (PID) controller is fed an error signal $e(t)$. The error signal is defined as the set point minus the process variable. The output of the PID is some signal $u(t)$ which provides input into the system in order to drive the error signal, $e(t)$, towards zero. PID controllers are used in closed loop feedback topology, as shown in Figure XX.
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.15]{block_45}
+\caption{text}
+\end{figure}
+
+Mathematically, a PID controller is defined as follows:
+\begin{align}
+u(t) = K_P \cdot e(t) + \frac{K_P}{t_i} \cdot \int_{0}^{t} e(\tau) d\tau + K_P \cdot t_d \cdot \frac{de(t)}{dt}
+\end{align}
+
+The parameter $K_P$ is the proportional control parameter. The other two parameters of importance in equation XX are $t_i$, and $t_d$, which are called the integral time and derivative time parameters. Equation XX was implemented in the simulation, as shown in Figure XX.
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.2]{block_3_pid}
+\caption{text}
+\end{figure}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 4
+%----------------------------------------------------------------------------------------
+
+\section{Proportional Control}
+The PID controller, shown implemented in Figure XX, was tuned to provide proportional only control. The proportional gain, $K_P$, was set to 20. Additionally, we let $t_i \rightarrow \infty$, and $t_d = 0$. A step input of 10$\si{\degreeCelsius}$ in the feed of the system was simulated. The results of the simulation can be seen in Figure XX
+\begin{figure}
+\begin{minipage}{0.45\textwidth}
+\centering
+%\includegraphics[height=6cm]{imagefile}
+\caption{text}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}{0.45\textwidth}
+\centering
+\includegraphics[height=6cm]{1a_sim}
+\caption{text}
+\end{minipage}
+\end{figure} 
 \end{document}

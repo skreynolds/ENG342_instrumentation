@@ -62,7 +62,6 @@
 
 \begin{center}
 \begin{tabular}{l r}
-Date Performed: & August 13, 2017 \\ % Date the experiment was performed
 Professor: & Dr Suresh Thennadil % Instructor/supervisor
 \end{tabular}
 \end{center}
@@ -337,8 +336,26 @@ Figure 12 shows that there is some measurement error in the initial response to 
 %	SECTION 4
 %----------------------------------------------------------------------------------------
 
+\section{Piping \& Instrumentation Diagram of Tank Heating System}
+
+A piping and instrumentation diagram (P\&ID) describes the process, and how the instrumentation is interconnected. The P\&ID for the tank heating problem can be seen in Figure 13. Notably, there are three instruments in use:
+\begin{enumerate}
+	\item \textbf{Temperature transmitter}: measures and transmits the temperature electronically to the control room. This instrument is denoted with the symbol TT.
+	\item \textbf{Temperature Indicator \& Control}: displays the current tank temperature and sends a control signal to the mechanism which actuates the valve control to let more (or less) steam into the heating element, based on the current state of the system. This instrument is denoted with the symbol TIC.
+	\item \textbf{Temperature Computer Output}: receives the control signal from the controller and pneumatically actuates the flow valve to let in more (or less) steam, depending on the control signal. This instrument is denoted with the symbol TY.
+\end{enumerate}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{p_id.jpg}
+	\caption{Piping and instrumentation diagram for the tank heating system modelled in this report.}
+\end{figure}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 5
+%----------------------------------------------------------------------------------------
+
 \section{PID Controller For Tank Heating System}
-A proportional-integral-derivative (PID) controller is fed an error signal $e(t)$. The error signal is defined as the set point minus the process variable. The output of the PID is some signal $u(t)$ which provides input into the system in order to drive the error signal, $e(t)$, towards zero. PID controllers are used in closed loop feedback topologies, as shown in Figure 13.
+A proportional-integral-derivative (PID) controller is fed an error signal $e(t)$. The error signal is defined as the set point minus the process variable. The output of the PID is some signal $u(t)$ which provides input into the system in order to drive the error signal, $e(t)$, towards zero. PID controllers are used in closed loop feedback topologies, as shown in Figure 14.
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.15]{block_45}
@@ -350,19 +367,19 @@ Mathematically, a PID controller is defined as follows:
 u(t) = K_P \cdot e(t) + \frac{K_P}{t_i} \cdot \int_{0}^{t} e(\tau) d\tau + K_P \cdot t_d \cdot \frac{de(t)}{dt}
 \end{align}
 
-The parameter $K_P$ is the proportional control parameter. The other two parameters of importance in equation XX are $t_i$, and $t_d$, which are called the integral time and derivative time parameters. Equation XX was implemented in the simulation, as shown in Figure 14.
+The parameter $K_P$ is the proportional control parameter. The other two parameters of importance in equation XX are $t_i$, and $t_d$, which are called the integral time and derivative time parameters. Equation XX was implemented in the simulation, as shown in Figure 15.
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.15]{block_3_pid}
 \caption{The functional block diagram of the PID implementation.}
 \end{figure}
-
+\newpage
 %----------------------------------------------------------------------------------------
-%	SECTION 4
+%	SECTION 5.1
 %----------------------------------------------------------------------------------------
 
-\section{Proportional (P) Control}
-The PID controller, shown implemented in Figure 14, was tuned to provide proportional control only. The proportional gain, $K_P$, was set to 20. Additionally, we let $t_i \rightarrow \infty$, and $t_d = 0$. A step input of 10$\si{\degreeCelsius}$ in the feed of the system was simulated. The results of the simulation can be seen in Figure 15. Figure 16 is a reproduction of Figure 3 for comparison purposes.
+\subsection{Proportional (P) Control}
+The PID controller, shown implemented in Figure 14, was tuned to provide proportional control only. The proportional gain, $K_P$, was set to 20. Additionally, we let $t_i \rightarrow \infty$, and $t_d = 0$. A step input of 10$\si{\degreeCelsius}$ in the feed of the system was simulated. The results of the simulation can be seen in Figure 16. Figure 17 is a reproduction of Figure 3 for comparison purposes.
 \begin{figure}[h]
 \begin{minipage}{0.45\textwidth}
 \centering
@@ -377,14 +394,14 @@ The PID controller, shown implemented in Figure 14, was tuned to provide proport
 \end{minipage}
 \end{figure}
 
-Comparison of Figures 15 and 16 show a clear marginal improvement on the response of the system with control implemented. It is the intention of the controller, given some perturbation to the system, to move the system process variable back to the set point. In this instance, perfect control would see the temperature deviation fall down to zero. This has not happened using only proportional control, however, the control measure has slowed the convergence to a deviation temperature to the 10$\si{\degreeCelsius}$ increase. 
-\newpage
+Comparison of Figures 16 and 17 show a clear marginal improvement on the response of the system with control implemented. It is the intention of the controller, given some perturbation to the system, to move the system process variable back to the set point. In this instance, perfect control would see the temperature deviation fall down to zero. This has not happened using only proportional control, however, the control measure has slowed the convergence to a deviation temperature to the 10$\si{\degreeCelsius}$ increase. 
+
 %----------------------------------------------------------------------------------------
-%	SECTION 4
+%	SECTION 5.2
 %----------------------------------------------------------------------------------------
 
-\section{Proportional Integral (PI) Control}
-The proportional gain, $K_P$, was again set to 20. In a series of three simulations $t_i$ was set to equal 0.5$\si{\minute}$, 1$\si{\minute}$, and 1.5$\si{\minute}$. In each of the three simulations, we let $t_d = 0$. A step input of 10$\si{\degreeCelsius}$ in the feed of the system was simulated in each of the three simulations. The simulation results can be seen in Figures 17, 18, and 19, respectively.
+\subsection{Proportional Integral (PI) Control}
+The proportional gain, $K_P$, was again set to 20. In a series of three simulations $t_i$ was set to equal 0.5$\si{\minute}$, 1$\si{\minute}$, and 1.5$\si{\minute}$. In each of the three simulations, we let $t_d = 0$. A step input of 10$\si{\degreeCelsius}$ in the feed of the system was simulated in each of the three simulations. The simulation results can be seen in Figures 18, 19, and 20, respectively.
 \begin{figure}[h]
 \begin{minipage}{0.45\textwidth}
 \centering
@@ -404,5 +421,5 @@ The proportional gain, $K_P$, was again set to 20. In a series of three simulati
 \caption{Closed loop PI ($t_i=1.5\si{\minute}$) feedback control on the tank heating system for a step change in the feed temperature of 10$\si{\degreeCelsius}$}
 \end{figure}
 
-As stated in the previous section, the intention of the controller is to move the controlled process variable to the desired set point. In this case, the process variable is the deviation in the outlet temperature, $T'(s)$. The set point is zero meaning given some perturbation from the feed input, the controller needs to maintain the process at initial conditions. The PI feedback controller show marked improvement over the P feedback controller. This can be seen in Figures 17, 18, and 19. All figures show control towards the desired set point of zero. The best is obviously the controller with $t_i=0.5\si{\minute}$, as this converges the fastest. 
+As stated in the previous section, the intention of the controller is to move the controlled process variable to the desired set point. In this case, the process variable is the deviation in the outlet temperature, $T'(s)$. The set point is zero meaning given some perturbation from the feed input, the controller needs to maintain the process at initial conditions. The PI feedback controller show marked improvement over the P feedback controller. This can be seen in Figures 18, 19, and 20. All figures show control towards the desired set point of zero. The best is obviously the controller with $t_i=0.5\si{\minute}$, as this converges the fastest. 
 \end{document}

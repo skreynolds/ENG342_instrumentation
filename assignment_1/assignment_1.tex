@@ -80,14 +80,14 @@ Professor: & Dr Suresh Thennadil % Instructor/supervisor
 
 \section{Objective}
 
-An ideal tank heating process scenario will be mathematically modelled. Comparison the model will compared to simulated results, and discussed.
+An ideal tank heating process scenario will be mathematically modelled. The derived model will be compared to simulated results, and discussed.
 
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
 
 \section{Background \& Model Derivation}
-Consider a tank with a capacity of 1000$\si{\liter}$, which has some feed with a volumetric flow rate for the feed of 200$\si{\litre\per\minute}$, both in and out of the tank. Further, to this the tank is heated with an electric heater. Assuming that there is no heat transfer through the tank walls, the law of conservation of energy suggests that:
+Consider a tank with a capacity of 1000$\si{\liter}$, which has some feed with a volumetric flow rate of 200$\si{\liter\per\minute}$, both in and out of the tank. Further, the tank is heated with an electric heater. Assuming that there is no heat transfer through the tank walls, the law of conservation of energy suggests that:
 \begin{align}
 \Bigg[\parbox{3cm}{Rate of heat from incoming liquid}\Bigg] - \Bigg[\parbox{3cm}{Rate of heat form outgoing liquid}\Bigg] + \Bigg[\parbox{3cm}{Rate of heat into tank from heater}\Bigg] = \Bigg[\parbox{3cm}{Rate of heat accumulation in tank}\Bigg]
 \end{align}
@@ -110,7 +110,7 @@ The accumulation of heat in the tank, $Q_T$, for a fixed mass, $M$, is given by 
 Q_{T} = M \cdot C_P \cdot (T - T_{ref})
 \end{align*}
 
-Differentiating this expression, we get the rate of heat change in the tank accumulation is given by:
+Differentiating this expression, we get that the rate of heat change in the tank accumulation is given by:
 \begin{align}
 q_{T} = M \cdot C_P \cdot \frac{dT}{dt} = \rho \cdot V \cdot C_P \cdot \frac{dT}{dt}
 \end{align}
@@ -125,7 +125,7 @@ Noting that $\omega = \frac{dm_{in}}{dt} = \frac{dm_{out}}{dt}$, we can write:
 \omega \cdot C_p \cdot (T_i - T_{ref}) - \omega \cdot C_p \cdot (T - T_{ref}) + q_h = \rho \cdot V \cdot C_P \cdot \frac{dT}{dt}
 \end{align}
 
-Considering, this equation in the steady state, yields:
+Considering the system in steady state yields:
 \begin{align}
 \omega \cdot C_p \cdot (T_{is} - T_{ref}) - \omega \cdot C_p \cdot (T_s - T_{ref}) + q_h = 0
 \end{align}
@@ -151,7 +151,7 @@ where the time constant and resistance are defined as follows:
 \section{Time Response of Open Loop System}
 Equation (8) defined the theoretical model of the system as:
 \begin{align*}
-T'(s) = \bigg(\frac{1}{\tau s + 1}\bigg) \cdot T'_i(s) + \bigg(\frac{R}{\tau s + 1}\bigg) \cdot q_h(s)
+T'(s) = \bigg(\frac{1}{\tau s + 1}\bigg) \cdot T'_i(s) + \bigg(\frac{R}{\tau s + 1}\bigg) \cdot q'_h(s)
 \end{align*}
 
 In order to specify the model fully, the time constant, $\tau$, and the resistance, $R$, need to be calculated. If the tank capacity, $V$, is 1000$\si{\liter}$, the fluid density, $\rho$, is 1$\si{\kilogram\per\liter}$, and the volumetric flow rate, $v_f$, is 200$\si{\liter\per\minute}$, then the time constant, $\tau$, is determined as:
@@ -165,7 +165,7 @@ R = \frac{1}{\omega \cdot C_P} = \frac{1}{\rho \cdot v_f \cdot C_P} = \frac{1}{8
 \end{align*}
 
 \subsection{Plant Time Response for Step Increase in Feed Temperature, With Heat Input Held Constant}
-Holding the heat input to the system constant, a step increase in the feed temperature was input to the system. The mathematical model in the Laplace domain can be seen in equation (9):
+Holding the heat input to the system constant, a step increase in the feed temperature was input to the system. Since $q'_h(s)=0$, the mathematical model in the Laplace domain can be seen in equation (9):
 \begin{align}
 T'(s) = \frac{1}{5 \cdot s + 1} \cdot T'_i(s)
 \end{align} 
@@ -209,14 +209,14 @@ The plot of this model can be seen in Figure 2. A simulation of the system was r
 \end{figure}
 
 \subsection{Plant Time Response for Step Increase in Heat Input, With Feed Temperature Held Constant}
-Holding the feed temperature to the system constant, a step increase in the heat input introduced to the system. The mathematical model in the Laplace domain can be seen in equation (12):
+Holding the feed temperature to the system constant, a step increase in the heat input introduced to the system. Since $T'_i(s)=0$, the mathematical model in the Laplace domain can be seen in equation (12):
 \begin{align}
 T'(s) = \frac{\sfrac{1}{836.8}}{5 \cdot s + 1} \cdot q'_h(s)
 \end{align} 
 
 Given a deviation in the heat input, $q'_h(t)$ , of 42$\si{\kilo\watt} = 2520\si{\kilo\joule\per\minute}$ we note that model shown in equation (12) can be re-written as:
 \begin{align}
-T'(s) = \frac{2520}{s \cdot (5 \cdot s + 1)}
+T'(s) = \frac{\sfrac{2520}{836.8}}{s \cdot (5 \cdot s + 1)}
 \end{align}
 
 Solving this system yields the following expression for the temperature deviation in the time domain:
@@ -255,7 +255,7 @@ T'(s) = \frac{1}{5 \cdot s + 1} \cdot T'_i(s) + \frac{\sfrac{1}{836.8}}{5 \cdot 
 
 The step increase in the heat from the the feed is 10$\si{\degreeCelsius}$, and the step increase for the heat input is 42$\si{\kilo\watt}$ as seen in the previous two subsections. This yields the following mathematical model in the Laplace domain:
 \begin{align}
-T'(s) = \frac{10}{s \cdot (5 \cdot s + 1)} + \frac{2520}{s \cdot (5 \cdot s + 1)}
+T'(s) = \frac{10}{s \cdot (5 \cdot s + 1)} + \frac{\sfrac{2520}{836.8}}{s \cdot (5 \cdot s + 1)}
 \end{align}
 
 Solving this system yields the following expression for the temperature deviation in the time domain:
